@@ -1,0 +1,693 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gram Bazar | Apna Local Market</title>
+<meta name="description" content="Gram Bazar - Local farmers, shops, products and village information in one place.">
+
+<style>
+:root {
+  --green:#16733b;
+  --dark:#104d2a;
+  --light:#f2f8f2;
+  --orange:#f59e0b;
+  --text:#25352b;
+  --white:#fff;
+  --shadow:0 5px 20px #00000012;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:Arial,sans-serif;
+  background:#f7faf7;color:var(--text);
+}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+.topbar{
+  background:var(--dark);color:white;
+  padding:9px 5%;font-size:13px;
+  display:flex;justify-content:space-between;gap:10px;
+  flex-wrap:wrap;
+}
+header{
+  background:white;position:sticky;top:0;z-index:100;
+  box-shadow:var(--shadow);
+}
+.nav{
+  padding:14px 5%;display:flex;align-items:center;
+  justify-content:space-between;gap:15px;flex-wrap:wrap;
+}
+.logo{font-size:25px;font-weight:bold;color:var(--green)}
+.logo span{color:var(--orange)}
+.navlinks{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.navlinks a{font-size:14px;font-weight:600}
+.navlinks a:hover{color:var(--green)}
+.nav-actions{display:flex;gap:8px;align-items:center}
+.btn{
+  background:var(--green);color:white;border:0;
+  padding:11px 17px;border-radius:8px;font-weight:bold;
+}
+.btn:hover{background:var(--dark)}
+.btn-orange{background:var(--orange);color:#222}
+.btn-outline{background:white;color:var(--green);border:1px solid var(--green)}
+.cart-count{
+  background:#ef4444;color:white;border-radius:20px;
+  padding:2px 7px;font-size:12px;
+}
+.menu-btn{display:none}
+.hero{
+  padding:65px 7%;background:linear-gradient(110deg,#e1f2df,#f9f5e7);
+  display:grid;grid-template-columns:1.3fr 1fr;
+  align-items:center;gap:35px;
+}
+.hero h1{font-size:45px;line-height:1.2;color:var(--dark)}
+.hero h1 span{color:var(--green)}
+.hero p{line-height:1.8;margin:18px 0;color:#526256}
+.hero-image{
+  min-height:270px;border-radius:25px;
+  background:linear-gradient(135deg,#b4db9d,#f4db9e);
+  display:flex;align-items:center;justify-content:center;
+  font-size:110px;
+}
+.search-box{
+  display:flex;max-width:550px;background:white;
+  padding:6px;border-radius:10px;box-shadow:var(--shadow);
+}
+.search-box input{border:0;outline:none;flex:1;padding:12px;min-width:0}
+section{padding:55px 6%}
+.section-title{text-align:center;margin-bottom:30px}
+.section-title h2{font-size:29px;color:var(--dark);margin-bottom:9px}
+.section-title p{color:#718078;font-size:14px}
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:15px;padding:25px 6%;background:white;
+}
+.stat{text-align:center;padding:18px;border-radius:12px;background:var(--light)}
+.stat strong{display:block;font-size:26px;color:var(--green);margin-bottom:7px}
+.categories{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:15px;
+}
+.category{
+  text-align:center;padding:20px 8px;background:white;
+  border-radius:13px;box-shadow:var(--shadow);
+  cursor:pointer;transition:.2s;
+}
+.category:hover{transform:translateY(-5px)}
+.category .emoji{font-size:38px;margin-bottom:10px}
+.category h3{font-size:14px}
+.products{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
+}
+.product{
+  background:white;border-radius:13px;overflow:hidden;
+  box-shadow:var(--shadow);transition:.2s;
+}
+.product:hover{transform:translateY(-4px)}
+.product-img{
+  height:155px;background:#eef6e9;
+  display:flex;align-items:center;justify-content:center;font-size:65px;
+}
+.product-info{padding:15px}
+.product-info h3{font-size:17px;margin-bottom:8px}
+.product-info p{font-size:12px;color:#758078;margin-bottom:10px}
+.price{font-size:20px;color:var(--green);font-weight:bold}
+.product-info .btn{width:100%;margin-top:12px}
+.filter-row{
+  display:flex;justify-content:space-between;
+  align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px;
+}
+.filter-row select{
+  padding:10px;border:1px solid #ddd;border-radius:8px;background:white;
+}
+.feature-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+}
+.feature-card{
+  background:white;padding:25px;border-radius:14px;
+  box-shadow:var(--shadow);
+}
+.feature-card .emoji{font-size:35px}
+.feature-card h3{margin:13px 0;color:var(--dark)}
+.feature-card p{font-size:14px;line-height:1.7;color:#718078}
+.area-section{background:#edf6eb}
+.area-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.area-card{background:white;border-radius:12px;padding:22px;box-shadow:var(--shadow)}
+.area-card h3{color:var(--green);margin-bottom:10px}
+.area-card p{font-size:14px;line-height:1.8;color:#65736a}
+.area-card a{color:var(--green);font-weight:bold;font-size:13px}
+.forms-grid{display:grid;grid-template-columns:1fr 1fr;gap:25px}
+.form-card{
+  background:white;padding:25px;border-radius:14px;
+  box-shadow:var(--shadow);
+}
+.form-card h3{margin-bottom:18px;color:var(--dark)}
+.form-card input,.form-card select,.form-card textarea{
+  width:100%;padding:12px;margin-bottom:12px;
+  border:1px solid #ddd;border-radius:8px;outline-color:var(--green);
+}
+.form-card textarea{resize:vertical;min-height:85px}
+.form-card button{width:100%}
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.news-card{padding:20px;background:white;border-radius:12px;box-shadow:var(--shadow)}
+.news-card h3{margin:10px 0;color:var(--dark)}
+.news-card p{font-size:14px;line-height:1.7;color:#718078}
+.news-tag{color:var(--green);font-size:12px;font-weight:bold}
+footer{background:#103e27;color:white;padding:45px 6% 20px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:25px}
+footer h3{margin-bottom:15px}
+footer p,footer a{font-size:13px;color:#d4e4d8;line-height:2}
+footer a{display:block}
+.copyright{text-align:center;border-top:1px solid #ffffff30;padding-top:18px;margin-top:30px;font-size:13px}
+.modal{
+  display:none;position:fixed;inset:0;background:#0009;
+  z-index:300;align-items:center;justify-content:center;padding:15px;
+}
+.modal.show{display:flex}
+.modal-content{
+  background:white;width:100%;max-width:550px;
+  max-height:85vh;overflow:auto;padding:25px;border-radius:15px;
+}
+.modal-head{display:flex;justify-content:space-between;margin-bottom:20px}
+.close{border:0;background:#eee;border-radius:50%;width:30px;height:30px}
+.cart-item{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:13px 0;border-bottom:1px solid #eee;gap:10px;
+}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{border:0;background:#e8f3e8;padding:5px 10px;border-radius:5px}
+.total{font-size:20px;font-weight:bold;margin:20px 0}
+.empty{text-align:center;padding:35px;color:#718078}
+.hidden{display:none!important}
+#toast{
+  position:fixed;bottom:20px;right:20px;background:#174d2e;
+  color:white;padding:14px 20px;border-radius:9px;
+  display:none;z-index:500;
+}
+@media(max-width:900px){
+ .categories{grid-template-columns:repeat(3,1fr)}
+ .products{grid-template-columns:repeat(2,1fr)}
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .footer-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:650px){
+ .menu-btn{display:block}
+ .navlinks{display:none;width:100%;flex-direction:column;align-items:flex-start;padding:12px 0}
+ .navlinks.open{display:flex}
+ .hero{grid-template-columns:1fr;padding:40px 6%}
+ .hero h1{font-size:33px}
+ .hero-image{min-height:180px;font-size:75px}
+ .feature-grid,.area-grid,.news-grid,.forms-grid{grid-template-columns:1fr}
+ .categories{grid-template-columns:repeat(3,1fr)}
+ .products{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .product-img{height:115px;font-size:48px}
+ .product-info{padding:10px}
+ .product-info h3{font-size:14px}
+ section{padding:40px 5%}
+ .footer-grid{grid-template-columns:1fr 1fr}
+ .topbar{font-size:11px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <span>🌾 Gram Bazar – Apna Gaon, Apna Bazar</span>
+  <span>📍 <span id="locationText">Apna Local Area</span> | भारत</span>
+</div>
+
+<header>
+  <nav class="nav">
+    <a class="logo" href="#home">🌿 Gram<span>Bazar</span></a>
+    <button class="menu-btn btn-outline btn" onclick="toggleMenu()">☰ Menu</button>
+    <div class="navlinks" id="navlinks">
+      <a href="#home">Home</a>
+      <a href="#categories">Categories</a>
+      <a href="#products">Products</a>
+      <a href="#local">Local Area</a>
+      <a href="#farmers">Sell Products</a>
+      <a href="#news">News</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn btn-outline" onclick="openCart()">🛒 Cart <span id="cartCount" class="cart-count">0</span></button>
+    </div>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div>
+    <h1>आपका अपना <span>Gram Bazar</span></h1>
+    <p>अपने गाँव और आसपास के क्षेत्र के किसानों, दुकानदारों और ग्राहकों को जोड़ने वाला डिजिटल बाजार। ताजा सामान खरीदें और स्थानीय व्यापार को आगे बढ़ाएं।</p>
+    <div class="search-box">
+      <input id="searchInput" placeholder="क्या खरीदना चाहते हैं? जैसे आलू, चावल..." oninput="renderProducts()">
+      <button class="btn" onclick="document.getElementById('products').scrollIntoView()">Search</button>
+    </div>
+    <br>
+    <a href="#products" class="btn">Shop Now →</a>
+    <a href="#farmers" class="btn btn-orange">Become Seller</a>
+  </div>
+  <div class="hero-image">🌾 🥬 🥕</div>
+</section>
+
+<div class="stats">
+  <div class="stat"><strong>🌱</strong>Local Farmers</div>
+  <div class="stat"><strong>🏪</strong>Local Shops</div>
+  <div class="stat"><strong>🛒</strong>Online Shopping</div>
+  <div class="stat"><strong>🤝</strong>Village Connect</div>
+</div>
+
+<section id="categories">
+  <div class="section-title">
+    <h2>Shop By Category</h2>
+    <p>अपनी पसंद की कैटेगरी चुनें</p>
+  </div>
+  <div class="categories">
+    <div class="category" onclick="filterCategory('Vegetables')"><div class="emoji">🥦</div><h3>Vegetables</h3></div>
+    <div class="category" onclick="filterCategory('Fruits')"><div class="emoji">🍎</div><h3>Fruits</h3></div>
+    <div class="category" onclick="filterCategory('Grocery')"><div class="emoji">🌾</div><h3>Grocery</h3></div>
+    <div class="category" onclick="filterCategory('Dairy')"><div class="emoji">🥛</div><h3>Dairy</h3></div>
+    <div class="category" onclick="filterCategory('Handmade')"><div class="emoji">🎨</div><h3>Handmade</h3></div>
+    <div class="category" onclick="filterCategory('Other')"><div class="emoji">🧺</div><h3>Other</h3></div>
+  </div>
+</section>
+
+<section id="products">
+  <div class="section-title">
+    <h2>Our Local Products</h2>
+    <p>स्थानीय उत्पाद सीधे अपने क्षेत्र से</p>
+  </div>
+  <div class="filter-row">
+    <span id="productStatus">All Products</span>
+    <select id="sortProducts" onchange="renderProducts()">
+      <option value="default">Sort: Default</option>
+      <option value="low">Price: Low to High</option>
+      <option value="high">Price: High to Low</option>
+    </select>
+  </div>
+  <div class="products" id="productList"></div>
+</section>
+
+<section class="area-section" id="local">
+  <div class="section-title">
+    <h2>हमारा स्थानीय क्षेत्र</h2>
+    <p>अपने गाँव और जिले की महत्वपूर्ण जानकारी</p>
+  </div>
+  <div class="area-grid">
+    <div class="area-card">
+      <h3>📍 About Our Village</h3>
+      <p id="villageInfo">यहाँ अपने गाँव का नाम, इतिहास, जनसंख्या, ग्राम पंचायत और आसपास के क्षेत्रों की जानकारी जोड़ें।</p>
+    </div>
+    <div class="area-card">
+      <h3>🏥 Health & Education</h3>
+      <p id="healthInfo">स्थानीय अस्पताल, स्वास्थ्य केंद्र, स्कूल, कॉलेज और शिक्षा संस्थानों की जानकारी यहाँ जोड़ें।</p>
+    </div>
+    <div class="area-card">
+      <h3>🏛️ Government Offices</h3>
+      <p id="officeInfo">ग्राम पंचायत, तहसील, ब्लॉक कार्यालय, पुलिस स्टेशन और अन्य सरकारी कार्यालयों की जानकारी।</p>
+    </div>
+    <div class="area-card">
+      <h3>🌾 Agriculture</h3>
+      <p>स्थानीय फसलें, खेती के तरीके, खाद, बीज, सिंचाई और कृषि सेवाओं की जानकारी।</p>
+    </div>
+    <div class="area-card">
+      <h3>🚌 Transport</h3>
+      <p>बस स्टैंड, रेलवे स्टेशन, सड़क संपर्क और आसपास के शहरों तक पहुँचने की जानकारी।</p>
+    </div>
+    <div class="area-card">
+      <h3>🎭 Culture & Tourism</h3>
+      <p>स्थानीय मेले, त्योहार, मंदिर, पर्यटन स्थल, परंपराएं और सांस्कृतिक गतिविधियाँ।</p>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="section-title">
+    <h2>Our Services</h2>
+    <p>गाँव के लोगों के लिए उपयोगी सेवाएँ</p>
+  </div>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="emoji">🚜</div><h3>Farmer Support</h3><p>किसानों के उत्पाद, खेती की जानकारी और स्थानीय कृषि सेवाएँ।</p></div>
+    <div class="feature-card"><div class="emoji">🏪</div><h3>Shop Directory</h3><p>अपने आसपास की किराना, मेडिकल, कपड़े और अन्य दुकानों की जानकारी।</p></div>
+    <div class="feature-card"><div class="emoji">📢</div><h3>Local Updates</h3><p>गाँव की घोषणाएँ, कार्यक्रम, मेले और स्थानीय समाचार।</p></div>
+    <div class="feature-card"><div class="emoji">🏛️</div><h3>Government Schemes</h3><p>कृषि, शिक्षा, रोजगार और जनकल्याण योजनाओं के आधिकारिक लिंक।</p></div>
+    <div class="feature-card"><div class="emoji">🌤️</div><h3>Weather Information</h3><p>मौसम की जानकारी के लिए स्थानीय मौसम सेवा देखें।</p></div>
+    <div class="feature-card"><div class="emoji">📞</div><h3>Emergency Help</h3><p>स्थानीय आपातकालीन सेवाओं और उपयोगी संपर्कों की जानकारी।</p></div>
+  </div>
+</section>
+
+<section id="farmers" class="area-section">
+  <div class="section-title">
+    <h2>Join Gram Bazar</h2>
+    <p>किसान और दुकानदार अपना व्यापार ऑनलाइन शुरू करें</p>
+  </div>
+  <div class="forms-grid">
+    <form class="form-card" id="sellerForm">
+      <h3>🏪 Seller / Farmer Registration</h3>
+      <input required name="name" placeholder="आपका पूरा नाम">
+      <input required name="phone" type="tel" pattern="[0-9]{10}" placeholder="10 Digit Mobile Number">
+      <select required name="type">
+        <option value="">Select Seller Type</option>
+        <option>Farmer</option>
+        <option>Shopkeeper</option>
+        <option>Handmade Seller</option>
+      </select>
+      <input required name="business" placeholder="दुकान या व्यवसाय का नाम">
+      <input required name="area" placeholder="गाँव / क्षेत्र का नाम">
+      <textarea name="details" placeholder="आप क्या बेचना चाहते हैं?"></textarea>
+      <button class="btn">Submit Registration</button>
+    </form>
+
+    <form class="form-card" id="contactForm">
+      <h3>📩 Contact Us</h3>
+      <input required name="name" placeholder="आपका नाम">
+      <input required name="phone" type="tel" pattern="[0-9]{10}" placeholder="Mobile Number">
+      <input required name="email" type="email" placeholder="Email Address">
+      <textarea required name="message" placeholder="अपना संदेश लिखें"></textarea>
+      <button class="btn">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<section id="news">
+  <div class="section-title">
+    <h2>Local News & Updates</h2>
+    <p>अपने क्षेत्र की ताजा जानकारियाँ</p>
+  </div>
+  <div class="news-grid">
+    <div class="news-card"><span class="news-tag">AGRICULTURE</span><h3>🌾 किसान समाचार</h3><p>यहाँ स्थानीय कृषि समाचार, मंडी भाव और किसानों की घोषणाएँ प्रकाशित करें।</p></div>
+    <div class="news-card"><span class="news-tag">EDUCATION</span><h3>📚 शिक्षा अपडेट</h3><p>स्कूल, कॉलेज, परीक्षा, छात्रवृत्ति और रोजगार संबंधी सूचनाएँ।</p></div>
+    <div class="news-card"><span class="news-tag">LOCAL EVENTS</span><h3>🎉 स्थानीय कार्यक्रम</h3><p>गाँव के मेले, त्योहार, सांस्कृतिक कार्यक्रम और महत्वपूर्ण घोषणाएँ।</p></div>
+  </div>
+</section>
+
+<section id="contact" class="area-section">
+  <div class="section-title">
+    <h2>Contact Gram Bazar</h2>
+    <p>हमसे जुड़ें और अपने क्षेत्र को डिजिटल बनाएं</p>
+  </div>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="emoji">📞</div><h3>Phone</h3><p>अपना संपर्क नंबर यहाँ डालें।</p></div>
+    <div class="feature-card"><div class="emoji">✉️</div><h3>Email</h3><p>अपना आधिकारिक ईमेल यहाँ डालें।</p></div>
+    <div class="feature-card"><div class="emoji">📍</div><h3>Address</h3><p>अपने गाँव, ब्लॉक और जिले का पता यहाँ डालें।</p></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h2>🌿 Gram Bazar</h2>
+      <p>Apna Gaon, Apna Bazar.</p>
+      <p>स्थानीय व्यापार, किसान और ग्रामीण समुदाय को जोड़ने का एक डिजिटल प्रयास।</p>
+    </div>
+    <div><h3>Quick Links</h3><a href="#home">Home</a><a href="#products">Products</a><a href="#local">Local Area</a><a href="#farmers">Become Seller</a></div>
+    <div><h3>Categories</h3><a href="#products">Vegetables</a><a href="#products">Fruits</a><a href="#products">Grocery</a><a href="#products">Handmade</a></div>
+    <div><h3>Information</h3><a href="#services">Our Services</a><a href="#news">Local News</a><a href="#contact">Contact</a></div>
+  </div>
+  <div class="copyright">© 2026 Gram Bazar. All Rights Reserved.</div>
+</footer>
+
+<!-- CART MODAL -->
+<div class="modal" id="cartModal">
+  <div class="modal-content">
+    <div class="modal-head"><h2>🛒 My Cart</h2><button class="close" onclick="closeCart()">✕</button></div>
+    <div id="cartItems"></div>
+    <div class="total" id="cartTotal">Total: ₹0</div>
+    <button class="btn" style="width:100%" onclick="checkout()">Proceed to Checkout</button>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal" id="checkoutModal">
+  <div class="modal-content">
+    <div class="modal-head"><h2>Checkout</h2><button class="close" onclick="closeCheckout()">✕</button></div>
+    <form id="orderForm">
+      <input required name="name" placeholder="Customer Name" style="width:100%;padding:12px;margin-bottom:12px">
+      <input required name="phone" type="tel" pattern="[0-9]{10}" placeholder="Mobile Number" style="width:100%;padding:12px;margin-bottom:12px">
+      <textarea required name="address" placeholder="Delivery Address" style="width:100%;padding:12px;margin-bottom:12px"></textarea>
+      <select name="payment" style="width:100%;padding:12px;margin-bottom:12px">
+        <option>Cash on Delivery (Demo)</option>
+        <option>UPI (Payment integration required)</option>
+      </select>
+      <p id="checkoutTotal" style="margin-bottom:15px;font-weight:bold"></p>
+      <button class="btn" style="width:100%">Place Demo Order</button>
+    </form>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ==========================================
+// 1. PRODUCT DATABASE
+// ==========================================
+
+const products = [
+ {id:1,name:"Fresh Tomato",category:"Vegetables",price:30,unit:"kg",emoji:"🍅",seller:"Local Farmer"},
+ {id:2,name:"Fresh Potato",category:"Vegetables",price:25,unit:"kg",emoji:"🥔",seller:"Local Farmer"},
+ {id:3,name:"Green Spinach",category:"Vegetables",price:20,unit:"bunch",emoji:"🥬",seller:"Local Farmer"},
+ {id:4,name:"Fresh Onion",category:"Vegetables",price:35,unit:"kg",emoji:"🧅",seller:"Local Farmer"},
+ {id:5,name:"Fresh Apple",category:"Fruits",price:120,unit:"kg",emoji:"🍎",seller:"Fruit Shop"},
+ {id:6,name:"Banana",category:"Fruits",price:50,unit:"dozen",emoji:"🍌",seller:"Fruit Shop"},
+ {id:7,name:"Mango",category:"Fruits",price:80,unit:"kg",emoji:"🥭",seller:"Local Farmer"},
+ {id:8,name:"Fresh Orange",category:"Fruits",price:70,unit:"kg",emoji:"🍊",seller:"Fruit Shop"},
+ {id:9,name:"Rice",category:"Grocery",price:55,unit:"kg",emoji:"🍚",seller:"Kirana Store"},
+ {id:10,name:"Wheat",category:"Grocery",price:35,unit:"kg",emoji:"🌾",seller:"Local Farmer"},
+ {id:11,name:"Toor Dal",category:"Grocery",price:110,unit:"kg",emoji:"🫘",seller:"Kirana Store"},
+ {id:12,name:"Mustard Oil",category:"Grocery",price:150,unit:"L",emoji:"🫙",seller:"Kirana Store"},
+ {id:13,name:"Fresh Milk",category:"Dairy",price:60,unit:"L",emoji:"🥛",seller:"Dairy Farmer"},
+ {id:14,name:"Curd",category:"Dairy",price:45,unit:"kg",emoji:"🥣",seller:"Dairy Shop"},
+ {id:15,name:"Handmade Basket",category:"Handmade",price:180,unit:"piece",emoji:"🧺",seller:"Local Artisan"},
+ {id:16,name:"Clay Pot",category:"Handmade",price:100,unit:"piece",emoji:"🏺",seller:"Local Artisan"},
+ {id:17,name:"Wooden Craft",category:"Other",price:250,unit:"piece",emoji:"🪵",seller:"Local Artisan"},
+ {id:18,name:"Honey",category:"Other",price:200,unit:"bottle",emoji:"🍯",seller:"Local Producer"}
+];
+
+let cart = JSON.parse(localStorage.getItem("gramCart") || "[]");
+let activeCategory = "All";
+
+// ==========================================
+// 2. DISPLAY PRODUCTS
+// ==========================================
+
+function renderProducts(){
+ const search = document.getElementById("searchInput").value.toLowerCase();
+ const sort = document.getElementById("sortProducts").value;
+
+ let list = products.filter(p =>
+  (activeCategory==="All" || p.category===activeCategory) &&
+  (p.name.toLowerCase().includes(search) || p.category.toLowerCase().includes(search))
+ );
+
+ if(sort==="low") list.sort((a,b)=>a.price-b.price);
+ if(sort==="high") list.sort((a,b)=>b.price-a.price);
+
+ document.getElementById("productStatus").textContent =
+   list.length+" Products Found";
+
+ document.getElementById("productList").innerHTML = list.length ?
+ list.map(p=>`
+ <div class="product">
+  <div class="product-img">${p.emoji}</div>
+  <div class="product-info">
+   <h3>${p.name}</h3>
+   <p>${p.category} • ${p.seller}</p>
+   <div class="price">₹${p.price} <small>/${p.unit}</small></div>
+   <button class="btn" onclick="addToCart(${p.id})">Add to Cart +</button>
+  </div>
+ </div>`).join("") :
+ '<div class="empty">No products found.</div>';
+}
+
+function filterCategory(category){
+ activeCategory=category;
+ document.getElementById("searchInput").value="";
+ renderProducts();
+ document.getElementById("products").scrollIntoView();
+}
+
+// ==========================================
+// 3. CART FUNCTIONS
+// ==========================================
+
+function saveCart(){
+ localStorage.setItem("gramCart",JSON.stringify(cart));
+ updateCartCount();
+}
+
+function addToCart(id){
+ const item=cart.find(x=>x.id===id);
+ if(item)item.qty++;
+ else cart.push({id,qty:1});
+ saveCart();
+ showToast("Product added to cart!");
+}
+
+function updateCartCount(){
+ document.getElementById("cartCount").textContent=
+ cart.reduce((sum,item)=>sum+item.qty,0);
+}
+
+function cartTotal(){
+ return cart.reduce((sum,item)=>{
+  const p=products.find(x=>x.id===item.id);
+  return sum+(p?p.price*item.qty:0);
+ },0);
+}
+
+function openCart(){
+ renderCart();
+ document.getElementById("cartModal").classList.add("show");
+}
+function closeCart(){
+ document.getElementById("cartModal").classList.remove("show");
+}
+
+function renderCart(){
+ const box=document.getElementById("cartItems");
+ if(!cart.length){
+  box.innerHTML='<div class="empty">🛒 Your cart is empty</div>';
+ }else{
+  box.innerHTML=cart.map(item=>{
+   const p=products.find(x=>x.id===item.id);
+   return `
+   <div class="cart-item">
+    <div>${p.emoji} <b>${p.name}</b><br><small>₹${p.price} / ${p.unit}</small></div>
+    <div class="qty">
+     <button onclick="changeQty(${p.id},-1)">−</button>
+     ${item.qty}
+     <button onclick="changeQty(${p.id},1)">+</button>
+     <button onclick="removeItem(${p.id})">🗑</button>
+    </div>
+   </div>`;
+  }).join("");
+ }
+ document.getElementById("cartTotal").textContent="Total: ₹"+cartTotal();
+}
+
+function changeQty(id,n){
+ const item=cart.find(x=>x.id===id);
+ if(item){
+  item.qty+=n;
+  if(item.qty<=0)cart=cart.filter(x=>x.id!==id);
+ }
+ saveCart();renderCart();
+}
+function removeItem(id){
+ cart=cart.filter(x=>x.id!==id);
+ saveCart();renderCart();
+}
+
+function checkout(){
+ if(!cart.length){showToast("Please add products first");return;}
+ closeCart();
+ document.getElementById("checkoutTotal").textContent="Order Total: ₹"+cartTotal();
+ document.getElementById("checkoutModal").classList.add("show");
+}
+function closeCheckout(){
+ document.getElementById("checkoutModal").classList.remove("show");
+}
+
+// ==========================================
+// 4. DEMO ORDER SUBMISSION
+// ==========================================
+
+document.getElementById("orderForm").addEventListener("submit",function(e){
+ e.preventDefault();
+ const data=new FormData(this);
+ const order={
+  orderId:"GB"+Date.now(),
+  customer:data.get("name"),
+  phone:data.get("phone"),
+  address:data.get("address"),
+  payment:data.get("payment"),
+  items:cart,
+  total:cartTotal(),
+  date:new Date().toLocaleString("en-IN")
+ };
+
+ let orders=JSON.parse(localStorage.getItem("gramOrders")||"[]");
+ orders.push(order);
+ localStorage.setItem("gramOrders",JSON.stringify(orders));
+
+ alert("Order placed successfully!\\nOrder ID: "+order.orderId+
+ "\\nTotal: ₹"+order.total+
+ "\\n\\nThis is a demo order, not a real delivery booking.");
+
+ cart=[];
+ saveCart();
+ this.reset();
+ closeCheckout();
+});
+
+// ==========================================
+// 5. SELLER REGISTRATION
+// ==========================================
+
+document.getElementById("sellerForm").addEventListener("submit",function(e){
+ e.preventDefault();
+ const data=Object.fromEntries(new FormData(this).entries());
+ let sellers=JSON.parse(localStorage.getItem("gramSellers")||"[]");
+ sellers.push({...data,date:new Date().toLocaleDateString()});
+ localStorage.setItem("gramSellers",JSON.stringify(sellers));
+ alert("Registration saved successfully! (Demo)");
+ this.reset();
+});
+
+// ==========================================
+// 6. CONTACT FORM
+// ==========================================
+
+document.getElementById("contactForm").addEventListener("submit",function(e){
+ e.preventDefault();
+ const data=Object.fromEntries(new FormData(this).entries());
+ let messages=JSON.parse(localStorage.getItem("gramMessages")||"[]");
+ messages.push({...data,date:new Date().toLocaleString()});
+ localStorage.setItem("gramMessages",JSON.stringify(messages));
+ alert("Your message has been saved! (Demo)");
+ this.reset();
+});
+
+// ==========================================
+// 7. OTHER FUNCTIONS
+// ==========================================
+
+function toggleMenu(){
+ document.getElementById("navlinks").classList.toggle("open");
+}
+
+function showToast(message){
+ const t=document.getElementById("toast");
+ t.textContent=message;
+ t.style.display="block";
+ setTimeout(()=>t.style.display="none",2200);
+}
+
+document.querySelectorAll(".navlinks a").forEach(a=>{
+ a.addEventListener("click",()=>{
+  document.getElementById("navlinks").classList.remove("open");
+ });
+});
+
+// Close modal by clicking outside
+document.querySelectorAll(".modal").forEach(modal=>{
+ modal.addEventListener("click",e=>{
+  if(e.target===modal)modal.classList.remove("show");
+ });
+});
+
+// ==========================================
+// 8. START WEBSITE
+// ==========================================
+
+renderProducts();
+updateCartCount();
+
+</script>
+</body>
+</html>
